@@ -5,7 +5,7 @@ layout: base
   <article class="hj-prose">
     <header class="hj-post-head">
       <p class="hj-meta">
-        {{#if page.date}}<time datetime="{{ page.date }}">{{ page.date | date("YYYY년 M월 D일") }}</time> · {{/if}}읽는 데 {{ page.readingTime }}분
+        {{#if page.date}}<time datetime="{{ page.date }}">{{ page.date | date(t.dateFormat) }}</time> · {{/if}}{{ t.minRead | format(page.readingTime) }}
       </p>
       <h1>{{ page.title }}</h1>
       {{#if page.tags}}

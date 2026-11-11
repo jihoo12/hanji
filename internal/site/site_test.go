@@ -59,12 +59,13 @@ func TestBuild(t *testing.T) {
 	has("docs/index.html", `<div class="box">문서<p><strong>본문</strong></p>`)
 	has("docs/index.html", `.box{color:red}`)
 	has("docs/index.html", `console.log(1)`)
-	has("docs/b/index.html", `<a class="prev" href="/sub/docs/a/"><small>이전</small>첫째</a>`)
+	has("docs/b/index.html", `<a class="prev" href="/sub/docs/a/"><small>Previous</small>첫째</a>`)
 	has("docs/b/index.html", `<li class="l2"><a href="#절">절</a></li>`)
 	has("docs/a/index.html", `<span data-hj-text="0">1</span> <button type="button" class="hj-action" data-hj-on="1">더</button>`)
 	has("docs/a/index.html", `import{mount}from"/sub/_hanji/live.js";mount({state:{"n":1},derive:{},persist:false,fns:[$=>($.n),($,$event)=>{$.n += 1}]})`)
 	has("t/가-나/index.html", `<h1>T 가 나</h1>`)
 	has("t/b/index.html", `값 b`)
+	has("docs/b/index.html", `aria-label="Link to this section"`)
 	has("sitemap.xml", `<loc>https://example.com/sub/docs/a/</loc>`)
 	if strings.Contains(page("docs/b/index.html"), "live.js") {
 		t.Error("a page without live expressions must not load live.js")
@@ -101,6 +102,24 @@ func TestBuildErrors(t *testing.T) {
 	for _, want := range []string{"pages/index.md:3: broken link: nope.md", `pages/index.md:5: unknown component "nothing"`, "pages/index.md:8:"} {
 		if !strings.Contains(err.Error(), want) {
 			t.Errorf("missing %q in:\n%v", want, err)
+		}
+	}
+}
+
+func TestStrings(t *testing.T) {
+	dir := t.TempDir()
+	write(t, dir, map[string]string{
+		"hanji.yml":      "lang: ko-KR\nstrings:\n  madeWith: 손으로 만듦\n",
+		"pages/index.md": "::: tip\n본문\n:::\n\n```go\nx\n```\n",
+	})
+	res, err := Build(Options{Dir: dir, Theme: hanji.Theme()})
+	if err != nil {
+		t.Fatal(err)
+	}
+	out := string(res.Files["index.html"].Data)
+	for _, want := range []string{`<p class="hj-callout-title">팁</p>`, `aria-label="코드 복사">복사</button>`, "<span>손으로 만듦</span>", `data-hj-copied="복사됨"`} {
+		if !strings.Contains(out, want) {
+			t.Errorf("missing %q", want)
 		}
 	}
 }

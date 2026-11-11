@@ -8,7 +8,7 @@
     {{#if p.date}}<time datetime="{{ p.date }}">{{ p.date | date("YYYY.MM.DD") }}</time>{{/if}}
   </li>
   {{:else}}
-  <li class="empty">아직 글이 없습니다.</li>
+  <li class="empty">{{ t.noPosts }}</li>
   {{/each}}
 </ul>
 <style>

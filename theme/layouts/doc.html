@@ -2,7 +2,7 @@
 layout: base
 ---
 <div class="hj-doc">
-  <aside class="hj-sidebar" aria-label="문서 목차">
+  <aside class="hj-sidebar" aria-label="{{ t.docsNav }}">
     {{> sidenav items=sidebar()}}
   </aside>
   <main id="content" class="hj-doc-main">
@@ -10,14 +10,14 @@ layout: base
       <h1>{{ page.title }}</h1>
       {{slot}}
     </article>
-    <nav class="hj-pager" aria-label="이전/다음 문서">
-      {{#if page.prev}}<a class="prev" href="{{ page.prev.url }}"><small>이전</small>{{ page.prev.title }}</a>{{:else}}<span></span>{{/if}}
-      {{#if page.next}}<a class="next" href="{{ page.next.url }}"><small>다음</small>{{ page.next.title }}</a>{{/if}}
+    <nav class="hj-pager" aria-label="{{ t.pager }}">
+      {{#if page.prev}}<a class="prev" href="{{ page.prev.url }}"><small>{{ t.prev }}</small>{{ page.prev.title }}</a>{{:else}}<span></span>{{/if}}
+      {{#if page.next}}<a class="next" href="{{ page.next.url }}"><small>{{ t.next }}</small>{{ page.next.title }}</a>{{/if}}
     </nav>
   </main>
-  <aside class="hj-toc" aria-label="이 페이지의 목차">
+  <aside class="hj-toc" aria-label="{{ t.tocLabel }}">
     {{#if page.toc}}
-    <p>이 페이지에서</p>
+    <p>{{ t.onThisPage }}</p>
     <ul>
       {{#each h in page.toc}}<li class="l{{ h.level }}"><a href="#{{ h.id }}">{{ h.text }}</a></li>
       {{/each}}

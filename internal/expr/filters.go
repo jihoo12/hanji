@@ -14,8 +14,16 @@ import (
 var Filters = map[string]Filter{
 	"upper": func(in any, _ []any) (any, error) { return strings.ToUpper(Str(in)), nil },
 	"lower": func(in any, _ []any) (any, error) { return strings.ToLower(Str(in)), nil },
-	"trim":  func(in any, _ []any) (any, error) { return strings.TrimSpace(Str(in)), nil },
-	"raw":   func(in any, _ []any) (any, error) { return HTML(Str(in)), nil },
+	// format("x"): fill the %s placeholder of a string
+	"format": func(in any, a []any) (any, error) {
+		s := Str(in)
+		for _, x := range a {
+			s = strings.Replace(s, "%s", Str(x), 1)
+		}
+		return s, nil
+	},
+	"trim": func(in any, _ []any) (any, error) { return strings.TrimSpace(Str(in)), nil },
+	"raw":  func(in any, _ []any) (any, error) { return HTML(Str(in)), nil },
 	"escape": func(in any, _ []any) (any, error) {
 		return html.EscapeString(Str(in)), nil
 	},

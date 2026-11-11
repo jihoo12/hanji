@@ -1,7 +1,7 @@
 # 사이트 설정 — 여기 있는 모든 값은 템플릿에서 site.<이름> 으로 읽을 수 있습니다.
 title: 한지
 description: 문서가 곧 앱이 되는 마크다운 웹 프레임워크
-lang: ko
+lang: ko            # 테마의 화면 문구 언어 (ko, en)
 seal: 紙            # 로고 도장에 찍힐 한 글자
 
 # 배포할 주소를 적으면 sitemap.xml 과 feed.xml 이 만들어집니다.

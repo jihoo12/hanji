@@ -163,7 +163,7 @@ function renderResults(q) {
         .slice(0, 8)
         .map((h, i) => `<li><a href="${escapeHTML(h.p.url)}" aria-selected="${i === 0}"><strong>${mark(h.p.title)}</strong><span>${mark(h.snippet)}</span></a></li>`)
         .join("")
-    : `<li class="empty">“${escapeHTML(q)}” 에 대한 결과가 없습니다</li>`
+    : `<li class="empty">${escapeHTML((root.dataset.hjNoResults ?? "%s").replace("%s", q))}</li>`
 }
 
 function moveSelection(delta) {
@@ -186,8 +186,8 @@ document.addEventListener("click", (e) => {
   if (copy) {
     const code = copy.closest(".hj-code")?.querySelector("code")
     navigator.clipboard?.writeText(code.innerText.replace(/\n$/, "")).then(() => {
-      copy.textContent = "복사됨"
-      setTimeout(() => (copy.textContent = "복사"), 1500)
+      copy.textContent = root.dataset.hjCopied ?? "Copied"
+      setTimeout(() => (copy.textContent = root.dataset.hjCopy ?? "Copy"), 1500)
     })
     return
   }

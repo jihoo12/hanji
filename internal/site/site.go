@@ -81,6 +81,7 @@ type Site struct {
 	dirOrder   map[string]float64
 	sidebars   map[string][]*navNode
 	static     map[string]string // output path → source file
+	strings    map[string]any    // interface text of the theme, for site.lang
 	errs       []error
 }
 
@@ -95,6 +96,7 @@ func Build(opt Options) (*Result, error) {
 	if err := s.loadConfig(); err != nil {
 		return nil, err
 	}
+	s.loadStrings()
 	s.loadTemplates()
 	s.loadPages()
 	res := &Result{Files: map[string]File{}, Pages: len(s.Pages), Base: s.Base}
@@ -127,7 +129,7 @@ func (s *Site) loadConfig() error {
 		}
 	}
 	def("title", "Hanji")
-	def("lang", "ko")
+	def("lang", "en")
 	def("description", "")
 	base := "/" + strings.Trim(expr.Str(s.Config["base"]), "/") + "/"
 	if base == "//" {
@@ -146,6 +148,34 @@ func (s *Site) loadConfig() error {
 	}
 	return nil
 }
+
+// loadStrings picks the theme's interface text for site.lang (en if there
+// is none), then applies overrides from `strings:` in hanji.yml.
+func (s *Site) loadStrings() {
+	s.strings = map[string]any{}
+	if b, err := fs.ReadFile(s.opt.Theme, "strings.yml"); err == nil {
+		all, err := yaml.Parse(string(b))
+		if err != nil {
+			s.errf("theme strings.yml: %v", err)
+		}
+		lang, _, _ := strings.Cut(strings.ToLower(expr.Str(s.Config["lang"])), "-")
+		for _, l := range []string{"en", lang} {
+			if m, ok := all[l].(map[string]any); ok {
+				for k, v := range m {
+					s.strings[k] = v
+				}
+			}
+		}
+	}
+	if m, ok := s.Config["strings"].(map[string]any); ok {
+		for k, v := range m {
+			s.strings[k] = v
+		}
+	}
+}
+
+// T returns one piece of interface text.
+func (s *Site) T(key string) string { return expr.Str(s.strings[key]) }
 
 // url applies the base path to a root-relative URL.
 func (s *Site) url(p string) string {
@@ -496,6 +526,7 @@ func (s *Site) addPage(p *Page) {
 func (s *Site) env(p *Page) *expr.Env {
 	vars := map[string]any{
 		"site":  s.Config,
+		"t":     s.strings,
 		"now":   time.Now(),
 		"pages": expr.Func(s.fnPages),
 		"tags":  expr.Func(s.fnTags),

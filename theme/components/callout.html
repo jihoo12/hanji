@@ -1,5 +1,5 @@
 <aside class="hj-callout {{ kind }}">
-  <p class="hj-callout-title">{{ title | default(kind == "tip" ? "팁" : kind == "warn" ? "주의" : kind == "danger" ? "위험" : "참고") }}</p>
+  <p class="hj-callout-title">{{ title | default(t[kind]) }}</p>
   {{slot}}
 </aside>
 <style>

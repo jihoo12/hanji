@@ -44,8 +44,9 @@ bin/hanji build my-site   # static site in my-site/dist
 With Nix you can try it without installing anything: `nix run . -- dev starter`.
 
 The full guide lives in the starter site (`starter/pages/docs/`) and is readable in the
-browser once the dev server is running. The guide and the built-in theme's interface text
-are currently written in Korean.
+browser once the dev server is running. The guide itself is currently written in Korean. The
+built-in theme's interface text follows `lang:` in `hanji.yml` (`en` by default, `ko`
+available) and single strings can be overridden under `strings:`.
 
 ## What makes it different
 

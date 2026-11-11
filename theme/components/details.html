@@ -1,5 +1,5 @@
 <details class="hj-details"{{#if open}} open{{/if}}>
-  <summary>{{ title | default("자세히") }}</summary>
+  <summary>{{ title | default(t.details) }}</summary>
   {{slot}}
 </details>
 <style>

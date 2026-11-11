@@ -58,7 +58,7 @@ var (
 
 // Highlight renders a fenced code block. The info string may carry a title
 // and highlighted lines:  ```go title="main.go" {2,4-6}
-func Highlight(info, code string) string {
+func Highlight(info, code, copy, copyCode string) string {
 	lang := ""
 	if f := strings.Fields(info); len(f) > 0 && !strings.ContainsAny(f[0], `={"`) {
 		lang = strings.ToLower(f[0])
@@ -101,7 +101,7 @@ func Highlight(info, code string) string {
 	if m := titleRe.FindStringSubmatch(info); m != nil {
 		head = m[1]
 	}
-	fmt.Fprintf(&b, `<figcaption><span>%s</span><button type="button" class="hj-copy" aria-label="코드 복사">복사</button></figcaption>`, html.EscapeString(head))
+	fmt.Fprintf(&b, `<figcaption><span>%s</span><button type="button" class="hj-copy" aria-label="%s">%s</button></figcaption>`, html.EscapeString(head), html.EscapeString(copyCode), html.EscapeString(copy))
 	b.WriteString("<pre><code>")
 	for i, l := range strings.Split(body, "\n") {
 		cls := "line"

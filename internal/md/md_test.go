@@ -51,9 +51,9 @@ func TestInline(t *testing.T) {
 func TestBlocks(t *testing.T) {
 	cases := []struct{ name, in, want string }{
 		{"heading ids", "## 안녕 World\n## 안녕 World\n### 직접 {#custom}",
-			`<h2 id="안녕-world">안녕 World<a class="hj-anchor" href="#안녕-world" aria-label="이 섹션 링크">#</a></h2>` + "\n" +
-				`<h2 id="안녕-world-2">안녕 World<a class="hj-anchor" href="#안녕-world-2" aria-label="이 섹션 링크">#</a></h2>` + "\n" +
-				`<h3 id="custom">직접<a class="hj-anchor" href="#custom" aria-label="이 섹션 링크">#</a></h3>`},
+			`<h2 id="안녕-world">안녕 World<a class="hj-anchor" href="#안녕-world" aria-label="Link to this section">#</a></h2>` + "\n" +
+				`<h2 id="안녕-world-2">안녕 World<a class="hj-anchor" href="#안녕-world-2" aria-label="Link to this section">#</a></h2>` + "\n" +
+				`<h3 id="custom">직접<a class="hj-anchor" href="#custom" aria-label="Link to this section">#</a></h3>`},
 		{"tight nested list", "- a\n  - b\n- c", "<ul>\n<li>a\n<ul>\n<li>b</li>\n</ul></li>\n<li>c</li>\n</ul>"},
 		{"loose ordered list", "3. a\n\n4. b", "<ol start=\"3\">\n<li><p>a</p></li>\n<li><p>b</p></li>\n</ol>"},
 		{"tasks", "- [x] 한 일\n- [ ] 할 일", "<ul class=\"hj-tasks\">\n<li><input type=\"checkbox\" disabled checked> 한 일</li>\n<li><input type=\"checkbox\" disabled> 할 일</li>\n</ul>"},

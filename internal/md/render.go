@@ -11,16 +11,17 @@ import (
 // Renderer turns a block tree into HTML. The hooks are where the host
 // (package site) plugs in expressions, live bindings and components.
 type Renderer struct {
-	Eval      func(src string) string                   // {{ src }} → HTML
-	Live      func(src string) (string, bool)           // { src } → HTML, or false to keep literal
-	Action    func(labelHTML, code string) string       // [label](@code)
-	Input     func(spec, onEnter string) (string, bool) // [? spec] or [? spec](@code)
-	Link      func(href string) string                  // rewrite link targets
-	Code      func(info, code string) string            // fenced code
-	Directive func(n *Node) string                      // ::: and :: blocks
-	Heading   func(level int, id, innerHTML string)     // observe headings (toc)
-	Line      int                                       // source line of the block being rendered, for error messages
-	ids       map[string]int
+	Eval        func(src string) string                   // {{ src }} → HTML
+	Live        func(src string) (string, bool)           // { src } → HTML, or false to keep literal
+	Action      func(labelHTML, code string) string       // [label](@code)
+	Input       func(spec, onEnter string) (string, bool) // [? spec] or [? spec](@code)
+	Link        func(href string) string                  // rewrite link targets
+	Code        func(info, code string) string            // fenced code
+	Directive   func(n *Node) string                      // ::: and :: blocks
+	Heading     func(level int, id, innerHTML string)     // observe headings (toc)
+	AnchorLabel string                                    // accessible name of heading anchors
+	Line        int                                       // source line of the block being rendered, for error messages
+	ids         map[string]int
 }
 
 func (r *Renderer) Blocks(nodes []*Node) string {
@@ -66,7 +67,11 @@ func (r *Renderer) block(b *strings.Builder, n *Node, tight bool) {
 		}
 		anchor := ""
 		if n.Level > 1 {
-			anchor = fmt.Sprintf(`<a class="hj-anchor" href="#%s" aria-label="이 섹션 링크">#</a>`, esc(id))
+			label := r.AnchorLabel
+			if label == "" {
+				label = "Link to this section"
+			}
+			anchor = fmt.Sprintf(`<a class="hj-anchor" href="#%s" aria-label="%s">#</a>`, esc(id), esc(label))
 		}
 		fmt.Fprintf(b, "<h%d id=\"%s\">%s%s</h%d>\n", n.Level, esc(id), inner, anchor, n.Level)
 	case Code:

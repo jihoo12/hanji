@@ -146,7 +146,8 @@ func (s *Site) renderPage(p *Page) (string, string, []any) {
 	} else {
 		rc.r = &md.Renderer{
 			Eval: rc.eval, Live: rc.liveText, Action: rc.liveAction, Input: rc.liveInput,
-			Link: rc.link, Code: Highlight, Directive: rc.directive,
+			Link: rc.link, Directive: rc.directive, AnchorLabel: s.T("anchor"),
+			Code: func(info, code string) string { return Highlight(info, code, s.T("copy"), s.T("copyCode")) },
 			Heading: func(level int, id, inner string) {
 				if level == 2 || level == 3 {
 					rc.toc = append(rc.toc, map[string]any{"id": id, "level": float64(level), "text": expr.StripTags(inner)})

@@ -1,4 +1,4 @@
-// 한지 Hanji live runtime.
+// Hanji live runtime.
 //
 // The compiler turns live markdown into plain HTML with data-hj-* markers and
 // a list of tiny functions; this file wires the two together. There is no

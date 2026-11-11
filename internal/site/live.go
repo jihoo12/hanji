@@ -7,7 +7,7 @@ import (
 
 // live compiles the reactive parts of one page. Markdown like
 //
-//	지금 {count}번 눌렀습니다. [하나 더](@count += 1)
+//	Clicked {count} times. [One more](@count += 1)
 //
 // becomes plain HTML with data-hj-* markers plus a list of tiny JS functions
 // that the client runtime (theme/assets/live.js) wires together.

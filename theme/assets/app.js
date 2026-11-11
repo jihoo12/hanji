@@ -1,4 +1,4 @@
-// 한지 Hanji site runtime: instant navigation, search, theme, toc, copy.
+// Hanji site runtime: instant navigation, search, theme, toc, copy.
 // Everything is delegated from `document`, because navigation swaps <body>.
 
 const base = document.querySelector('meta[name="hanji-base"]')?.content ?? "/"

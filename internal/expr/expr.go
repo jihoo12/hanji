@@ -3,7 +3,7 @@
 //
 //	pages("blog/*") | where("tags", "go") | limit(3)
 //	page.date | date("2006-01-02")
-//	page.draft ? "초안" : "발행"
+//	page.draft ? "draft" : "published"
 package expr
 
 import (

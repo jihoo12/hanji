@@ -38,7 +38,7 @@ func Dev(opt site.Options, addr string) error {
 		return err
 	}
 	go s.watch()
-	fmt.Printf("\n  한지 Hanji %s\n\n  ➜  http://%s%s\n\n", site.Version, strings.Replace(ln.Addr().String(), "[::]", "localhost", 1), s.base)
+	fmt.Printf("\n  Hanji %s\n\n  ➜  http://%s%s\n\n", site.Version, strings.Replace(ln.Addr().String(), "[::]", "localhost", 1), s.base)
 	return http.Serve(ln, s)
 }
 
@@ -132,7 +132,7 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 		status = http.StatusNotFound
 		if f, ok = res.Files["404.html"]; !ok {
-			http.Error(w, "404 — "+r.URL.Path+" 페이지가 없습니다", status)
+			http.Error(w, "404 — no page at "+r.URL.Path, status)
 			return
 		}
 		name = "404.html"
@@ -188,13 +188,13 @@ func Preview(dir, addr string) error {
 	if _, err := os.Stat(dir); err != nil {
 		return fmt.Errorf("%s not found — run `hanji build` first", dir)
 	}
-	fmt.Printf("\n  한지 Hanji preview\n\n  ➜  http://%s/\n\n", strings.Replace(addr, "0.0.0.0", "localhost", 1))
+	fmt.Printf("\n  Hanji preview\n\n  ➜  http://%s/\n\n", strings.Replace(addr, "0.0.0.0", "localhost", 1))
 	return http.ListenAndServe(addr, http.FileServer(http.Dir(dir)))
 }
 
-const errorPage = `<!doctype html><meta charset="utf-8"><title>빌드 오류 · Hanji</title>
+const errorPage = `<!doctype html><meta charset="utf-8"><title>Build error · Hanji</title>
 <style>body{margin:0;font:15px/1.6 ui-monospace,Menlo,monospace;background:#1b1714;color:#f3ead9;padding:48px}
 h1{font:600 20px system-ui;color:#ef7a6d;margin:0 0 20px}pre{white-space:pre-wrap;background:#262019;padding:20px;border-radius:10px;border-left:4px solid #ef7a6d}
 p{font-family:system-ui;color:#b5a892}</style>
-<h1>빌드에 실패했습니다</h1><pre>%s</pre><p>파일을 고치면 이 페이지는 자동으로 새로고침됩니다.</p>
+<h1>Build failed</h1><pre>%s</pre><p>This page reloads by itself once the file is fixed.</p>
 <script>new EventSource("/_hanji/reload").onmessage=()=>location.reload()</script>`

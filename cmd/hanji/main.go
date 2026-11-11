@@ -14,16 +14,16 @@ import (
 	"hanji/internal/site"
 )
 
-const usage = `한지 Hanji %s — 문서가 곧 앱이 되는 마크다운 웹 프레임워크
+const usage = `Hanji %s — a markdown-first web framework where the document is the app
 
-사용법:
-  hanji new <dir>            새 사이트를 만듭니다
-  hanji dev [dir]            개발 서버 (저장하면 자동 새로고침)
-  hanji build [dir]          정적 사이트를 dist/ 에 빌드합니다
-  hanji preview [dir]        빌드 결과를 로컬에서 확인합니다
+Usage:
+  hanji new <dir>            create a new site
+  hanji dev [dir]            start the dev server (reloads on save)
+  hanji build [dir]          build the static site into dist/
+  hanji preview [dir]        serve the built site locally
   hanji version
 
-옵션:
+Options:
   dev, preview:  --port 5151   --host localhost
   build:         --out dist
 `
@@ -60,7 +60,7 @@ func main() {
 	switch cmd {
 	case "new":
 		if dirArg == "" {
-			err = fmt.Errorf("어디에 만들까요? 예: hanji new my-site")
+			err = fmt.Errorf("where should the site go? e.g. hanji new my-site")
 			break
 		}
 		err = scaffold(dirArg)
@@ -81,7 +81,7 @@ func main() {
 	case "help", "--help", "-h":
 		fmt.Printf(usage, site.Version)
 	default:
-		err = fmt.Errorf("알 수 없는 명령: %s (hanji help 를 실행해 보세요)", cmd)
+		err = fmt.Errorf("unknown command: %s (try `hanji help`)", cmd)
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "hanji:", err)
@@ -92,7 +92,7 @@ func main() {
 // scaffold writes the starter project into dir, which must be new or empty.
 func scaffold(dir string) error {
 	if entries, err := os.ReadDir(dir); err == nil && len(entries) > 0 {
-		return fmt.Errorf("%s 는 비어 있지 않습니다", dir)
+		return fmt.Errorf("%s is not empty", dir)
 	}
 	starter := hanji.Starter()
 	err := fs.WalkDir(starter, ".", func(p string, d fs.DirEntry, err error) error {
@@ -112,6 +112,6 @@ func scaffold(dir string) error {
 	if err != nil {
 		return err
 	}
-	fmt.Printf("✓ %s 에 새 사이트를 만들었습니다\n\n  cd %s\n  hanji dev\n\n", dir, dir)
+	fmt.Printf("✓ created a new site in %s\n\n  cd %s\n  hanji dev\n\n", dir, dir)
 	return nil
 }

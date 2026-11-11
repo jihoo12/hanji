@@ -1,4 +1,4 @@
-/* 한지 Hanji — built-in theme. Paper, ink and one red seal.
+/* Hanji — built-in theme. Paper, ink and one red seal.
    Override any token from your own stylesheet (hanji.yml → css). */
 :root {
   --paper: #f8f3e9;

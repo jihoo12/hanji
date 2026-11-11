@@ -1,0 +1,9 @@
+<figure class="hj-figure">
+  <img src="{{ url(src) }}" alt="{{ alt | default(title) }}" loading="lazy">
+  {{#if title}}<figcaption>{{ title }}</figcaption>{{/if}}
+</figure>
+<style>
+.hj-figure{margin:1.8rem 0;text-align:center}
+.hj-figure img{border-radius:var(--radius);border:1px solid var(--line)}
+.hj-figure figcaption{margin-top:.5rem;font-size:.88rem;color:var(--ink-2)}
+</style>

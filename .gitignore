@@ -1,0 +1,5 @@
+/bin/
+/result
+dist/
+.hanji/
+.direnv/

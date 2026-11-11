@@ -1,0 +1,22 @@
+<ul class="hj-postlist">
+  {{#each p in pages(from | default("**")) | limit(limit | default(100))}}
+  <li>
+    <a href="{{ p.url }}">
+      <strong>{{ p.title }}</strong>
+      {{#if p.description}}<span>{{ p.description | truncate(110) }}</span>{{/if}}
+    </a>
+    {{#if p.date}}<time datetime="{{ p.date }}">{{ p.date | date("YYYY.MM.DD") }}</time>{{/if}}
+  </li>
+  {{:else}}
+  <li class="empty">아직 글이 없습니다.</li>
+  {{/each}}
+</ul>
+<style>
+ul.hj-postlist{list-style:none;padding:0;margin:1.5rem 0}
+.hj-postlist li{display:flex;gap:1rem;align-items:baseline;justify-content:space-between;padding:1rem 0;border-bottom:1px solid var(--line);margin:0}
+.hj-postlist a{text-decoration:none;color:inherit;display:grid;gap:.2rem}
+.hj-postlist strong{font-family:var(--serif);font-size:1.15rem}
+.hj-postlist a:hover strong{color:var(--accent)}
+.hj-postlist span{color:var(--ink-2);font-size:.93rem}
+.hj-postlist time{color:var(--ink-2);font-size:.85rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+</style>

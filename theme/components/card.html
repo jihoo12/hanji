@@ -1,0 +1,12 @@
+{{#if href}}<a class="hj-card" href="{{ url(href) }}">{{:else}}<div class="hj-card">{{/if}}
+  {{#if icon}}<span class="hj-card-icon" aria-hidden="true">{{ icon }}</span>{{/if}}
+  {{#if title}}<strong class="hj-card-title">{{ title }}</strong>{{/if}}
+  <div class="hj-card-body">{{slot}}</div>
+{{#if href}}</a>{{:else}}</div>{{/if}}
+<style>
+.hj-card{display:block;padding:1.2rem 1.3rem;border:1px solid var(--line);border-radius:var(--radius);background:var(--paper-raised);color:inherit;text-decoration:none;transition:border-color .15s,transform .15s,box-shadow .15s}
+a.hj-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px -12px var(--shadow)}
+.hj-card-icon{display:block;font-size:1.5rem;margin-bottom:.5rem;line-height:1}
+.hj-card-title{display:block;font-family:var(--serif);font-size:1.08rem;margin-bottom:.3rem}
+.hj-card-body{color:var(--ink-2);font-size:.94rem}.hj-card-body>:first-child{margin-top:0}.hj-card-body>:last-child{margin-bottom:0}
+</style>

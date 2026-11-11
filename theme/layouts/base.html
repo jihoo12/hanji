@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.id ? page.title + " · " + site.title : site.title }}</title>
+<meta name="description" content="{{ page.description | default(site.description) }}">
+<meta name="generator" content="{{ site.generator }}">
+<meta name="hanji-base" content="{{ site.base }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description | default(site.description) }}">
+{{#if site.url}}<link rel="canonical" href="{{ site.url }}{{ page.url }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ url('/feed.xml') }}">{{/if}}
+<link rel="icon" href="{{ url(site.favicon | default('/favicon.svg')) }}">
+<script>try{var t=localStorage.getItem("hanji-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<link rel="stylesheet" href="{{ url('/_hanji/theme.css') }}">
+{{#each href in site.css}}<link rel="stylesheet" href="{{ url(href) }}">
+{{/each}}{{#if site.accent}}<style>:root{--accent:{{ site.accent }}}</style>
+{{/if}}<script type="module" src="{{ url('/_hanji/app.js') }}"></script>
+</head>
+<body>
+<a class="hj-skip" href="#content">본문으로 건너뛰기</a>
+<header class="hj-header">
+  <div class="hj-header-in">
+    <a class="hj-brand" href="{{ url('/') }}"><span class="hj-seal" aria-hidden="true">{{ site.seal | default("紙") }}</span>{{ site.title }}</a>
+    <nav class="hj-nav" aria-label="주 메뉴">
+      {{#each item in site.nav}}<a href="{{ item.href }}">{{ item.text }}</a>{{/each}}
+    </nav>
+    <div class="hj-tools">
+      <button type="button" class="hj-search-btn" data-hj-search aria-label="검색">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span>검색</span><kbd>/</kbd>
+      </button>
+      <button type="button" class="hj-icon-btn" data-hj-theme aria-label="밝은/어두운 테마 전환" title="테마 전환">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      </button>
+      <button type="button" class="hj-icon-btn hj-menu-btn" data-hj-menu aria-label="메뉴 열기">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+{{slot}}
+<footer class="hj-footer">
+  <div class="hj-footer-in">
+    <span>{{ site.footer | default("© " + now.year + " " + site.title) }}</span>
+    <span>한지 Hanji 로 만들었습니다</span>
+  </div>
+</footer>
+<dialog class="hj-search" id="hj-search" aria-label="사이트 검색">
+  <input type="search" placeholder="무엇을 찾으시나요?" autocomplete="off" spellcheck="false">
+  <ul role="listbox"></ul>
+  <p class="hj-search-hint"><kbd>↑</kbd><kbd>↓</kbd> 이동 · <kbd>Enter</kbd> 열기 · <kbd>Esc</kbd> 닫기</p>
+</dialog>
+</body>
+</html>

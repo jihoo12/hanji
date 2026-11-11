@@ -1,0 +1,5 @@
+<div class="hj-grid" style="--cols:{{ cols | default(3) }}">{{slot}}</div>
+<style>
+.hj-grid{display:grid;gap:1rem;margin:1.5rem 0;grid-template-columns:repeat(auto-fit,minmax(min(100%,max(13rem,calc(100%/var(--cols) - 1rem))),1fr))}
+.hj-grid>*{margin:0}
+</style>

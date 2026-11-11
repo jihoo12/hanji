@@ -1,0 +1,19 @@
+---
+layout: base
+---
+<main id="content" class="hj-page">
+  <article class="hj-prose">
+    <header class="hj-post-head">
+      <p class="hj-meta">
+        {{#if page.date}}<time datetime="{{ page.date }}">{{ page.date | date("YYYY년 M월 D일") }}</time> · {{/if}}읽는 데 {{ page.readingTime }}분
+      </p>
+      <h1>{{ page.title }}</h1>
+      {{#if page.tags}}
+      <p class="hj-tags">
+        {{#each t in page.tags}}{{#if site.tags}}<a href="{{ url(site.tags + (t | slug) + '/') }}">#{{ t }}</a>{{:else}}<span>#{{ t }}</span>{{/if}}{{/each}}
+      </p>
+      {{/if}}
+    </header>
+    {{slot}}
+  </article>
+</main>

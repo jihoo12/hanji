@@ -1,0 +1,36 @@
+<div class="hj-tabs" data-hj-tabs>{{slot}}</div>
+<style>
+.hj-tabs{margin:1.5rem 0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--paper-raised)}
+.hj-tabbar{display:flex;gap:.2rem;padding:.35rem .4rem 0;border-bottom:1px solid var(--line);background:var(--paper-sunk);overflow-x:auto}
+.hj-tabbar button{font:inherit;font-size:.9rem;padding:.45rem .9rem;border:0;background:none;color:var(--ink-2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.hj-tabbar button[aria-selected=true]{color:var(--ink);border-color:var(--accent);font-weight:600}
+.hj-tab{padding:.4rem 1.1rem}
+.hj-tab>h4{margin:.8rem 0 0;font-size:.9rem;color:var(--ink-2)}
+.hj-tabs.ready .hj-tab>h4{display:none}
+.hj-tab .hj-code{margin:.7rem 0}
+</style>
+<script>
+// Progressive enhancement: without JS every tab is simply shown in order.
+for (const tabs of document.querySelectorAll("[data-hj-tabs]:not(.ready)")) {
+  const panels = [...tabs.querySelectorAll(":scope > .hj-tab")]
+  if (!panels.length) continue
+  const bar = document.createElement("div")
+  bar.className = "hj-tabbar"
+  bar.setAttribute("role", "tablist")
+  const select = (i) => panels.forEach((p, j) => {
+    p.hidden = i !== j
+    bar.children[j].setAttribute("aria-selected", i === j)
+  })
+  panels.forEach((p, i) => {
+    const b = document.createElement("button")
+    b.type = "button"
+    b.setAttribute("role", "tab")
+    b.textContent = p.dataset.title
+    b.addEventListener("click", () => select(i))
+    bar.append(b)
+  })
+  tabs.prepend(bar)
+  tabs.classList.add("ready")
+  select(0)
+}
+</script>

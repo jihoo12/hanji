@@ -1,0 +1,8 @@
+<div class="hj-steps">{{slot}}</div>
+<style>
+.hj-steps>ol{list-style:none;padding:0;margin:1.5rem 0;counter-reset:step}
+.hj-steps>ol>li{counter-increment:step;position:relative;padding:0 0 1.4rem 3rem;margin:0}
+.hj-steps>ol>li::before{content:counter(step);position:absolute;left:0;top:-.1rem;width:2rem;height:2rem;display:grid;place-items:center;border-radius:6px;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:.9rem;font-family:var(--serif)}
+.hj-steps>ol>li:not(:last-child)::after{content:"";position:absolute;left:calc(1rem - .5px);top:2.2rem;bottom:.3rem;width:1px;background:var(--line)}
+.hj-steps>ol>li>p:first-child{margin-top:0}
+</style>

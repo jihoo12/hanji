@@ -1,0 +1,10 @@
+<aside class="hj-callout {{ kind }}">
+  <p class="hj-callout-title">{{ title | default(kind == "tip" ? "팁" : kind == "warn" ? "주의" : kind == "danger" ? "위험" : "참고") }}</p>
+  {{slot}}
+</aside>
+<style>
+.hj-callout{--c:var(--blue);margin:1.5rem 0;padding:.9rem 1.1rem;border:1px solid color-mix(in srgb,var(--c) 30%,var(--line));border-left:4px solid var(--c);border-radius:var(--radius);background:color-mix(in srgb,var(--c) 7%,var(--paper))}
+.hj-callout.tip{--c:var(--green)}.hj-callout.warn{--c:var(--amber)}.hj-callout.danger{--c:var(--accent)}
+.hj-callout-title{margin:0 0 .25rem;font-weight:700;font-size:.9rem;color:var(--c);letter-spacing:.01em}
+.hj-callout>:last-child{margin-bottom:0}.hj-callout>p{margin:.35rem 0}
+</style>

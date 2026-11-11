@@ -1,0 +1,25 @@
+# 사이트 설정 — 여기 있는 모든 값은 템플릿에서 site.<이름> 으로 읽을 수 있습니다.
+title: 한지
+description: 문서가 곧 앱이 되는 마크다운 웹 프레임워크
+lang: ko
+seal: 紙            # 로고 도장에 찍힐 한 글자
+
+# 배포할 주소를 적으면 sitemap.xml 과 feed.xml 이 만들어집니다.
+# url: https://example.com
+# base: /my-repo/   # 하위 경로에 배포할 때 (예: GitHub Pages)
+
+# accent: "#2f628f" # 강조 색
+# css: [/custom.css] # public/ 에 둔 내 스타일시트
+
+tags: /tags/        # 태그 페이지가 있는 경로 (pages/tags/[tag].md)
+
+nav:
+  - text: 문서
+    href: /docs/
+  - text: 블로그
+    href: /blog/
+
+# 폴더(섹션)별 기본 레이아웃
+layouts:
+  docs: doc
+  blog: post

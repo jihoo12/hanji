@@ -1,0 +1,9 @@
+<details class="hj-details"{{#if open}} open{{/if}}>
+  <summary>{{ title | default("자세히") }}</summary>
+  {{slot}}
+</details>
+<style>
+.hj-details{margin:1rem 0;border:1px solid var(--line);border-radius:var(--radius);padding:0 1.1rem;background:var(--paper-raised)}
+.hj-details summary{cursor:pointer;padding:.75rem 0;font-weight:600}
+.hj-details[open] summary{border-bottom:1px solid var(--line);margin-bottom:.6rem}
+</style>

@@ -1,0 +1,8 @@
+<ul class="hj-sidenav">
+  {{#each item in items}}
+  <li>
+    {{#if item.url}}<a href="{{ item.url }}"{{#if item.current}} aria-current="page"{{/if}}>{{ item.title }}</a>{{:else}}<span class="group">{{ item.title }}</span>{{/if}}
+    {{#if item.children}}{{> sidenav items=item.children}}{{/if}}
+  </li>
+  {{/each}}
+</ul>
